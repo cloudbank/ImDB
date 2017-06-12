@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="fifty">50dp</dimen>
+    <dimen name="sixty">60dp</dimen>
+    <dimen name="seventy">70dp</dimen>
+    <dimen name="eighty">80dp</dimen>
+    <dimen name="ninety">90dp</dimen>
+
+    <dimen name="ten_text_size">10sp</dimen>
+    <dimen name="fifteen_text_size">15sp</dimen>
+    <dimen name="seventeen_text_size">17sp</dimen>
+    <dimen name="twenty_text_size">20sp</dimen>
+    <dimen name="twentytwo_text_size">22sp</dimen>
+    <dimen name="thirty_text_size">30sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dialog_values">13sp</dimen>
+    <dimen name="title_text">15sp</dimen>
+    <dimen name="image_height">220dp</dimen>
+    <dimen name="card_height">36dp</dimen>
+    <dimen name="one_hundred_ten">110dp</dimen>
+    <dimen name="one_hundred_thirty">130dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="list_item_height">88dp</dimen>
+
+</resources>

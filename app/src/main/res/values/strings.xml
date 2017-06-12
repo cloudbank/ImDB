@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">ImDB</string>
+    <string name="sortA">Most Popular</string>
+    <string name="sortB">Top Rated</string>
+    <string name="sortF">Favourites</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="sample_name">John Doe</string>
+    <string name="sample_no">10</string>
+
+    <string name="sample_at">\@johndoe</string>
+
+    <string name="strings">%s</string>
+    <string name="release_date">Release Date</string>
+    <string name="plot_synopsis">Plot Synopsis</string>
+    <string name="user_rating">User Rating</string>
+    <string name="close">Close Activity</string>
+    <string name="movie_poster">Movie Poster</string>
+
+    <string name="lorem">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+		In mollis est vitae erat laoreet consectetur. Mauris dui mauris,
+		dictum vel egestas vel, porta sed ante. Phasellus congue viverra ipsum,
+		in elementum arcu ultricies nec.Morbi tincidunt nisl lacinia, placerat nisi eget, luctus tortor.
+	</string>
+    <string name="overview">OVERVIEW</string>
+    <string name="failedRequest">Request not Successful</string>
+    <string name="failedInternetRequest">Request failed. Check your internet connection</string>
 </resources>
