@@ -100,6 +100,19 @@ public class Movie implements Parcelable {
         id = in.readInt();
     }
 
+    public Movie(String backdrop_path, String originalTitle, String overview, double vote_average, String release_date, int id) {
+        this.backdrop_path = backdrop_path;
+        this.original_title = originalTitle;
+        this.overview = overview;
+        this.vote_average = vote_average;
+        this.release_date = release_date;
+        this.id = id;
+    }
+
+    public Movie() {
+
+    }
+
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel parcel) {
