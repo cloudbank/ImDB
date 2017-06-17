@@ -2,7 +2,6 @@ package com.example.relearn.imdb;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -11,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.relearn.imdb.adapter.MovieCursorAdapter;
 import com.example.relearn.imdb.sqlite.MoviesContract;
 
 public class FavouritesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -19,13 +19,15 @@ public class FavouritesActivity extends AppCompatActivity implements LoaderManag
     private static final String TAG = FavouritesActivity.class.getSimpleName();
     private static final int TASK_LOADER_ID = 0;
 
+    private MovieCursorAdapter movieCursorAdapter;
     RecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_db_main);
+
+        movieCursorAdapter = new MovieCursorAdapter(this);
 
         setUpRecyclerViews();
 
@@ -38,6 +40,7 @@ public class FavouritesActivity extends AppCompatActivity implements LoaderManag
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        recyclerView.setAdapter(movieCursorAdapter);
     }
 
     @Override
@@ -86,11 +89,12 @@ public class FavouritesActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        movieCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        movieCursorAdapter.swapCursor(null);
     }
+
 }

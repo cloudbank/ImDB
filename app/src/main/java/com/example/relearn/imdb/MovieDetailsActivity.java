@@ -18,7 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.relearn.imdb.adapter.PagerAdapter;
+import com.example.relearn.imdb.model.Movie;
 import com.example.relearn.imdb.sqlite.MoviesContract;
 import com.example.relearn.imdb.sqlite.MoviesDBHelper;
 
@@ -34,12 +36,18 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+    String moviePath;
+    Movie movie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
 
+        movie = getIntent().getParcelableExtra("movie");
+
         setUpUIElements();
+        loadImageIntoView();
         setUpViewPagerTabs();
 
         MoviesDBHelper dbHelper = new MoviesDBHelper(this);
@@ -106,28 +114,28 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
 
         // setup Floating Action Button
         final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fabs);
-        if (sharedPreferences.getBoolean(movie.id, false)) {
+        if (sharedPreferences.getBoolean(movie.getId()+"", false)) {
             floatingActionButton.setImageDrawable(ContextCompat.getDrawable(MovieDetailsActivity.this, R.drawable.ic_favorite_white_24px));
         }
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!sharedPreferences.getBoolean(movie.id, false)) {
+                if (!sharedPreferences.getBoolean(movie.getId()+"", false)) {
                     // if true
                     floatingActionButton.setImageDrawable(ContextCompat.getDrawable(MovieDetailsActivity.this, R.drawable.ic_favorite_white_24px));
-                    editor.putBoolean(movie.id, true);
+                    editor.putBoolean(movie.getId()+"", true);
                     editor.apply();
 
                     //Create new ContentValues object
                     ContentValues values = new ContentValues();
 
                     // Put the movie details into the contentValues object
-                    values.put(MoviesContract.FavoriteMovies.COLUMN_ID, id);
-                    values.put(MoviesContract.FavoriteMovies.COLUMN_TITLE, title);
-                    values.put(MoviesContract.FavoriteMovies.COLUMN_MOVIE_PATH, moviePath);
-                    values.put(MoviesContract.FavoriteMovies.COLUMN_OVERVIEW, overview);
-                    values.put(MoviesContract.FavoriteMovies.COLUMN_REL_DATE, relDate);
-                    values.put(MoviesContract.FavoriteMovies.COLUMN_RATING, rating);
+                    values.put(MoviesContract.FavoriteMovies.COLUMN_ID, movie.getId());
+                    values.put(MoviesContract.FavoriteMovies.COLUMN_TITLE, movie.getOriginal_title());
+                    values.put(MoviesContract.FavoriteMovies.COLUMN_MOVIE_PATH, movie.getBackdrop_path());
+                    values.put(MoviesContract.FavoriteMovies.COLUMN_OVERVIEW, movie.getOverview());
+                    values.put(MoviesContract.FavoriteMovies.COLUMN_REL_DATE, movie.getRelease_date());
+                    values.put(MoviesContract.FavoriteMovies.COLUMN_RATING, movie.getVote_average());
 
                     // Insert the contentvalues via a ContentResolver
                     Uri uri = getContentResolver().insert(MoviesContract.FavoriteMovies.CONTENT_URI, values);
@@ -138,10 +146,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                 } else {
                     //false
                     floatingActionButton.setImageDrawable(ContextCompat.getDrawable(MovieDetailsActivity.this, R.drawable.ic_favorite_border_white_24px));
-                    editor.putBoolean(movie.id, false);
+                    editor.putBoolean(movie.getId() + "", false);
                     editor.apply();
 
-                    boolean success = removeFavourite(Long.parseLong(movie.id));
+                    boolean success = removeFavourite(Long.parseLong(movie.getId()+""));
 
                     if (success) {
                         Snackbar.make(collapsingToolbarLayout, "Removed from Favourites", Snackbar.LENGTH_SHORT).show();
@@ -149,8 +157,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                 }
             }
         });
-
-
     }
 
     @Override
@@ -180,6 +186,12 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
 
     private boolean removeFavourite(long id) {
         return database.delete(MoviesContract.FavoriteMovies.TABLE_NAME, MoviesContract.FavoriteMovies.COLUMN_ID + "=" + id, null) > 0;
+    }
+
+    void loadImageIntoView() {
+        mMoviePoster = (ImageView)findViewById(R.id.moviePoster);
+        moviePath = "http://image.tmdb.org/t/p/w342";
+        Glide.with(this).load(moviePath + movie.getBackdrop_path()).into(mMoviePoster);
     }
 
 }

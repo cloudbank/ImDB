@@ -61,7 +61,7 @@
 
 			<TextView
 				android:padding="8dp"
-				android:text="RATING"
+				android:text="@string/rating"
 				android:fontFamily="sans-serif-light"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
 
 		<TextView
 			android:padding="8dp"
-			android:text="RELEASE DATE"
+			android:text="@string/release_dates"
 			android:fontFamily="sans-serif-light"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

@@ -23,7 +23,9 @@
 		dictum vel egestas vel, porta sed ante. Phasellus congue viverra ipsum,
 		in elementum arcu ultricies nec.Morbi tincidunt nisl lacinia, placerat nisi eget, luctus tortor.
 	</string>
-    <string name="overview">OVERVIEW</string>
+    <string name="overview">Overview</string>
     <string name="failedRequest">Request not Successful</string>
     <string name="failedInternetRequest">Request failed. Check your internet connection</string>
+    <string name="rating">Rating</string>
+    <string name="release_dates">Release Date</string>
 </resources>
