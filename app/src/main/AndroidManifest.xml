@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <provider
+            android:name=".sqlite.MoviesContentProvider"
+            android:authorities="com.example.relearn.imdb"
+            android:exported="false" />
+
     </application>
 
 </manifest>
