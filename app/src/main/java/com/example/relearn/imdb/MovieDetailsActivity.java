@@ -30,8 +30,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     private boolean mIsAvatarShown = true;
     private ImageView mMoviePoster;
     private int maxScrollSize;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
 
+    MoviesDBHelper dbHelper;
     private SQLiteDatabase database;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -46,30 +46,30 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
 
         movie = getIntent().getParcelableExtra("movie");
 
-        setUpUIElements();
-        loadImageIntoView();
-        setUpViewPagerTabs();
-
-        MoviesDBHelper dbHelper = new MoviesDBHelper(this);
+        dbHelper = new MoviesDBHelper(this);
         database = dbHelper.getWritableDatabase();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
+
+        setUpUIElements();
+        loadImageIntoView();
+
     }
 
-    private void setUpViewPagerTabs() {
+    void setUpUIElements() {
 
         //setup TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        //setup ViewPager
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        mMoviePoster = (ImageView)findViewById(R.id.moviePoster);
 
         //add tabs
         tabLayout.addTab(tabLayout.newTab().setText("Overview"));
         tabLayout.addTab(tabLayout.newTab().setText("Trailers"));
         tabLayout.addTab(tabLayout.newTab().setText("Reviews"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        //setup ViewPager
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         //bind PagerAdapter to viewPager
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -91,15 +91,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
 
             }
         });
-    }
-
-    void setUpUIElements() {
-
-        // Setup CollapsingToolbarLayout
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
 
         // Setup AppBarLayout
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(this);
         maxScrollSize = appBarLayout.getTotalScrollRange();
 
@@ -141,7 +135,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                     Uri uri = getContentResolver().insert(MoviesContract.FavoriteMovies.CONTENT_URI, values);
 
                     if (uri != null) {
-                        Snackbar.make(collapsingToolbarLayout, "Added to Favourites", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(appBarLayout, "Added to Favourites", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     //false
@@ -152,11 +146,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                     boolean success = removeFavourite(Long.parseLong(movie.getId()+""));
 
                     if (success) {
-                        Snackbar.make(collapsingToolbarLayout, "Removed from Favourites", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(appBarLayout, "Removed from Favourites", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             }
         });
+    }
+
+    public void fave(View v) {
+
     }
 
     @Override
@@ -189,7 +187,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     }
 
     void loadImageIntoView() {
-        mMoviePoster = (ImageView)findViewById(R.id.moviePoster);
         moviePath = "http://image.tmdb.org/t/p/w342";
         Glide.with(this).load(moviePath + movie.getBackdrop_path()).into(mMoviePoster);
     }

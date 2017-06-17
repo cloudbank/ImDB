@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     moviesAdapter = new MoviesAdapter(movieList.getResults());
                     rRecyclerView.setAdapter(moviesAdapter);
                 } else {
-                    Toast.makeText(MainActivity.this, "Request not Sucessful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Request not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 

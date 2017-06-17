@@ -57,11 +57,11 @@ public class MovieCursorAdapter extends RecyclerView.Adapter<MovieCursorAdapter.
                 String moviePath = cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_MOVIE_PATH));
                 String originalTitle = cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_TITLE));
                 String overview = cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_OVERVIEW));
-                double release_date = Double.parseDouble(cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_REL_DATE)));
-                String userRating = cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_RATING));
+                String release_date = cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_REL_DATE));
+                double userRating = Double.parseDouble(cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_RATING)));
                 int movieId = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MoviesContract.FavoriteMovies.COLUMN_ID)));
 
-                Movie movie = new Movie(moviePath, originalTitle, overview, release_date, userRating, movieId);
+                Movie movie = new Movie(moviePath, originalTitle, overview, userRating, release_date,  movieId);
                 intent.putExtra("movie", movie);
                 context.startActivity(intent);
             }
